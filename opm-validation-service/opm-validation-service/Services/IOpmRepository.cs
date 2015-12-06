@@ -2,7 +2,7 @@
 
 namespace opm_validation_service.Services {
     public interface IOpmRepository {
-        Opm GetOpm(EanEicCode code);
+        bool TryGetOpm(EanEicCode code, out Opm opmForCode);
         void AddOrUpdateOpm(Opm opm);
         void DeleteOpm(EanEicCode code);
     }

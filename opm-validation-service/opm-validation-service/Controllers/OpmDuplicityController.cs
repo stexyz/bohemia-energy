@@ -8,7 +8,9 @@ namespace opm_validation_service.Controllers
     public class OpmDuplicityController : ApiController
     {
         /// <summary>
-        /// TODO SP: expose https endpoint
+        /// TODO SP: 
+        /// 1) expose https endpoint
+        /// 2) make this a bean
         /// </summary>
         private readonly OpmVerificator _opmVerificator;
 
@@ -20,6 +22,10 @@ namespace opm_validation_service.Controllers
         public OpmVerificationResult Get(String id)
         {
             return _opmVerificator.VerifyOpm(id);
+        }
+
+        public OpmVerificationResult Get(String id, String token) {
+            return _opmVerificator.VerifyOpm(id, token);
         }
     }
 }

@@ -6,7 +6,7 @@ using opm_validation_service.Models;
 
 namespace opm_validation_service.Services {
     public class OpmRepository : IOpmRepository {
-        public Opm GetOpm(EanEicCode code)
+        public bool TryGetOpm(EanEicCode code, out Opm opmForCode)
         {
             throw new NotImplementedException();
         }
