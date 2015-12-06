@@ -5,10 +5,20 @@ using System.Web;
 using opm_validation_service.Models;
 
 namespace opm_validation_service.Services {
-    public class OpmRepository {
-        public bool FindOpm(EanEicCode code)
+    public class OpmRepository : IOpmRepository {
+        public Opm GetOpm(EanEicCode code)
         {
-            return code.Code == "859182400204379570";
+            throw new NotImplementedException();
+        }
+
+        public void AddOrUpdateOpm(Opm opm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteOpm(EanEicCode code)
+        {
+            throw new NotImplementedException();
         }
     }
 }
