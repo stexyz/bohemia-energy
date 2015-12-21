@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Security.Authentication;
 
 namespace opm_validation_service.Services {
     public class IdentityManagement : IIdentityManagement {
@@ -12,11 +13,13 @@ namespace opm_validation_service.Services {
         public bool ValidateUser(string token) {
             try {
                 string validationString = HttpGet("isTokenValid?tokenid=" + token);
+                //TODO SP: remove console writes
                 Console.WriteLine(validationString);
                 return validationString.Split("=".ToCharArray())[1].StartsWith("true");
             } catch (WebException ex) {
                 HttpStatusCode statusCode = ((HttpWebResponse)ex.Response).StatusCode;
                 if (statusCode == HttpStatusCode.Unauthorized) {
+                    //TODO SP: remove console writes
                     Console.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
                     return false;
                 }
@@ -43,7 +46,7 @@ namespace opm_validation_service.Services {
             try {
                 string userInfoString = HttpGet("attributes", token);
                 Console.WriteLine(userInfoString);
-                return new User();
+                return createUser(userInfoString);
             } catch (WebException ex) {
                 HttpStatusCode statusCode = ((HttpWebResponse)ex.Response).StatusCode;
                 if (statusCode == HttpStatusCode.Unauthorized) {
@@ -54,5 +57,34 @@ namespace opm_validation_service.Services {
             }
         }
 
+        private IUser createUser(string userInfoString)
+        {
+            bool uidRead = false;
+            foreach (string s in userInfoString.Split("\n".ToCharArray()))
+            {
+                if (uidRead)
+                {
+                    string uid = s.Split("=".ToCharArray())[1];
+                    return new User(uid);
+                }
+                uidRead = (s == "userdetails.attribute.name=uid");
+            }
+            throw new Exception();
+        }
+
+        public string Login(string userName, string password)
+        {
+            string validationString = HttpGet("authenticate?username=" + userName + "&password=" + password);
+
+            string[] validationResult = validationString.Split("=".ToCharArray());
+
+            //TODO SP: remove console writes
+            Console.WriteLine(validationString);
+            if (validationResult[0] == "token.id")
+            {
+                return validationResult[1];
+            }
+            throw new AuthenticationException("Login failed.");
+        }
     }
 }

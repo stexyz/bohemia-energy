@@ -2,6 +2,6 @@
 {
     public interface IUser {
         // temporaty user (identity)
-        int Id { get; }
+        string Id { get; }
     }
 }
