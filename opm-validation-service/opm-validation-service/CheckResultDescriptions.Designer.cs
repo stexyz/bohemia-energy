@@ -39,7 +39,7 @@ namespace opm_validation_service {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ean_eic_checker_service.CheckResultDescriptions", typeof(CheckResultDescriptions).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("opm_validation_service.CheckResultDescriptions", typeof(CheckResultDescriptions).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

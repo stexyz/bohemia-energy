@@ -3,7 +3,15 @@ using opm_validation_service.Models;
 
 namespace opm_validation_service.Services {
 
-    public class OpmVerificator {
+    public class OpmVerificator : IOpmVerificator
+    {
+        public OpmVerificator(IIdentityManagement identityManagement, IEanEicCheckerHttpClient eanEicCheckerHttpClient, IOpmRepository opmRepository)
+        {
+            IdentityManagement = identityManagement;
+            EanEicCheckerHttpClient = eanEicCheckerHttpClient;
+            OpmRepository = opmRepository;
+        }
+
         //BEANS:
         public IIdentityManagement IdentityManagement { private get; set; }
         public IEanEicCheckerHttpClient EanEicCheckerHttpClient { private get; set; }

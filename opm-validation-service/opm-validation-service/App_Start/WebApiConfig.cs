@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using Microsoft.Practices.Unity;
+using opm_validation_service.Services;
 
 namespace opm_validation_service {
     public static class WebApiConfig {
@@ -20,6 +22,18 @@ namespace opm_validation_service {
             // To disable tracing in your application, please comment out or remove the following line of code
             // For more information, refer to: http://www.asp.net/web-api
             config.EnableSystemDiagnosticsTracing();
+
+            var container = new UnityContainer();
+            container.RegisterType<IOpmVerificator, OpmVerificator>(new HierarchicalLifetimeManager());
+            container.RegisterType<IIdentityManagement, IdentityManagement>(new HierarchicalLifetimeManager());
+            
+            //TODO SP: load uri from app.config..
+            EanEicCheckerHttpClient eanEicCheckerHttpClient = new EanEicCheckerHttpClient("http://be-ean-eic-validator.azurewebsites.net/api/EanEicCheck");
+            container.RegisterInstance<IEanEicCheckerHttpClient>(eanEicCheckerHttpClient);
+
+            container.RegisterType<IOpmRepository, OpmRepository>(new HierarchicalLifetimeManager());
+            
+            config.DependencyResolver = new UnityResolver(container);
         }
     }
 }

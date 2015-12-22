@@ -5,22 +5,15 @@ using System.Security.Authentication;
 
 namespace opm_validation_service.Services {
     public class IdentityManagement : IIdentityManagement {
-        //TODO SP: change type string -> Url ?
-        //TODO SP: validate the token
-
         private static readonly Uri SsoUrl = new Uri(@"https://am-proxytest.bohemiaenergy.cz/opensso/identity/");
 
         public bool ValidateUser(string token) {
             try {
                 string validationString = HttpGet("isTokenValid?tokenid=" + token);
-                //TODO SP: remove console writes
-                Console.WriteLine(validationString);
                 return validationString.Split("=".ToCharArray())[1].StartsWith("true");
             } catch (WebException ex) {
                 HttpStatusCode statusCode = ((HttpWebResponse)ex.Response).StatusCode;
                 if (statusCode == HttpStatusCode.Unauthorized) {
-                    //TODO SP: remove console writes
-                    Console.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
                     return false;
                 }
                 throw;
@@ -45,12 +38,10 @@ namespace opm_validation_service.Services {
         public IUser GetUserInfo(string token) {
             try {
                 string userInfoString = HttpGet("attributes", token);
-                Console.WriteLine(userInfoString);
                 return createUser(userInfoString);
             } catch (WebException ex) {
                 HttpStatusCode statusCode = ((HttpWebResponse)ex.Response).StatusCode;
                 if (statusCode == HttpStatusCode.Unauthorized) {
-                    Console.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
                     return null;
                 }
                 throw;
@@ -78,8 +69,6 @@ namespace opm_validation_service.Services {
 
             string[] validationResult = validationString.Split("=".ToCharArray());
 
-            //TODO SP: remove console writes
-            Console.WriteLine(validationString);
             if (validationResult[0] == "token.id")
             {
                 return validationResult[1];

@@ -14,9 +14,9 @@ namespace opm_validation_service.Controllers
         /// </summary>
         private readonly OpmVerificator _opmVerificator;
 
-        public OpmDuplicityController()
+        public OpmDuplicityController(OpmVerificator opmVerificator)
         {
-            _opmVerificator = new OpmVerificator();
+            _opmVerificator = opmVerificator;
         }
 
         public OpmVerificationResult Get(String id)
