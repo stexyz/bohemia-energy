@@ -133,6 +133,10 @@
     <Compile Include="Models\CheckResult.cs" />
     <Compile Include="Models\EanEicCode.cs" />
     <Compile Include="Models\Opm.cs" />
+    <Compile Include="Persistence\OpmRepoFiller.cs" />
+    <None Include="Persistence\OpmRepoSampleData.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EanEicCheckerHttpClient.cs" />
     <Compile Include="Services\IdentityManagement.cs" />

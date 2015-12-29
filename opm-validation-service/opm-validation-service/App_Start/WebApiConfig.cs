@@ -28,6 +28,7 @@ namespace opm_validation_service {
             var container = new UnityContainer();
             container.RegisterType<IOpmVerificator, OpmVerificator>(new HierarchicalLifetimeManager());
 
+
             string idmUrl = System.Configuration.ConfigurationManager.AppSettings["IdmUrl"];
             IIdentityManagement idm = new IdentityManagement(idmUrl);
             container.RegisterInstance(idm);
@@ -36,7 +37,10 @@ namespace opm_validation_service {
             IEanEicCheckerHttpClient eanEicCheckerHttpClient = new EanEicCheckerHttpClient(eanEicCheckerUrl);
             container.RegisterInstance(eanEicCheckerHttpClient);
 
-            container.RegisterType<IOpmRepository, OpmInMemoryRepository>(new HierarchicalLifetimeManager());
+          
+            IOpmRepository opmInMemoryRepository = new OpmInMemoryRepository();
+            OpmRepoFiller.Fill(opmInMemoryRepository);
+            container.RegisterInstance(opmInMemoryRepository);
             
             config.DependencyResolver = new UnityResolver(container);
 #endregion IoC
