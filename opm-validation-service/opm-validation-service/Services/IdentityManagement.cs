@@ -5,7 +5,13 @@ using System.Security.Authentication;
 
 namespace opm_validation_service.Services {
     public class IdentityManagement : IIdentityManagement {
-        private static readonly Uri SsoUrl = new Uri(@"https://am-proxytest.bohemiaenergy.cz/opensso/identity/");
+        //TODO SP: constructor injection of URI
+
+        private readonly Uri _ssoUrl;
+        public IdentityManagement(string idmEndPoint)
+        {
+            _ssoUrl = new Uri(idmEndPoint);
+        }
 
         public bool ValidateUser(string token) {
             try {
@@ -21,13 +27,13 @@ namespace opm_validation_service.Services {
         }
 
         private string HttpGet(string restOfUri, string token = "") {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(SsoUrl + restOfUri);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_ssoUrl + restOfUri);
             request.Method = "GET";
             request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
             request.CookieContainer = new CookieContainer();
             if (token != "") {
                 Cookie c = new Cookie("iPlanetDirectoryPro", token);
-                c.Domain = SsoUrl.Host;
+                c.Domain = _ssoUrl.Host;
                 request.CookieContainer.Add(c);
             }
             Stream responseStream = request.GetResponse().GetResponseStream();

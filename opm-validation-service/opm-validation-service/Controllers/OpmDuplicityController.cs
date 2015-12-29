@@ -9,12 +9,13 @@ namespace opm_validation_service.Controllers
     {
         /// <summary>
         /// TODO SP: 
-        /// 1) expose https endpoint
+        /// 1) expose https endpoint (configurable in Web.config)
         /// 2) make this a bean
+        /// 3) decide what to do if number of allowed requests is over limit (http 4xx result vs. code in OpmVerificationResult) 
         /// </summary>
-        private readonly OpmVerificator _opmVerificator;
+        private readonly IOpmVerificator _opmVerificator;
 
-        public OpmDuplicityController(OpmVerificator opmVerificator)
+        public OpmDuplicityController(IOpmVerificator opmVerificator)
         {
             _opmVerificator = opmVerificator;
         }

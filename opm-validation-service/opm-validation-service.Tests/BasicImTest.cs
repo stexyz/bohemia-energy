@@ -6,9 +6,11 @@ using Assert = NUnit.Framework.Assert;
 namespace opm_validation_service.Tests {
     [TestFixture]
     public class IdentityManagementTest {
+        //TODO SP: use Unity to setup tests
+
         [Test]
         public void BasicImTest() {
-            IdentityManagement im = new IdentityManagement();
+            IdentityManagement im = new IdentityManagement("https://am-proxytest.bohemiaenergy.cz/opensso/identity/");
 
             string token = im.Login("t5734", "Lcii9lvy");
             const string badToken = "AAABB123123123DFSDFsdfsdf123123dsfsdf123SDFSDF4.*AAJTSQACMDE.*";

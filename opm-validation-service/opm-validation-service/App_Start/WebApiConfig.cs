@@ -23,17 +23,22 @@ namespace opm_validation_service {
             // For more information, refer to: http://www.asp.net/web-api
             config.EnableSystemDiagnosticsTracing();
 
+#region IoC
             var container = new UnityContainer();
             container.RegisterType<IOpmVerificator, OpmVerificator>(new HierarchicalLifetimeManager());
-            container.RegisterType<IIdentityManagement, IdentityManagement>(new HierarchicalLifetimeManager());
+
+            //TODO SP: load uri from app.config..
+            IIdentityManagement idm = new IdentityManagement(@"https://am-proxytest.bohemiaenergy.cz/opensso/identity/");
+            container.RegisterInstance(idm);
             
             //TODO SP: load uri from app.config..
-            EanEicCheckerHttpClient eanEicCheckerHttpClient = new EanEicCheckerHttpClient("http://be-ean-eic-validator.azurewebsites.net/api/EanEicCheck");
-            container.RegisterInstance<IEanEicCheckerHttpClient>(eanEicCheckerHttpClient);
+            IEanEicCheckerHttpClient eanEicCheckerHttpClient = new EanEicCheckerHttpClient("http://be-ean-eic-validator.azurewebsites.net/api/EanEicCheck");
+            container.RegisterInstance(eanEicCheckerHttpClient);
 
             container.RegisterType<IOpmRepository, OpmRepository>(new HierarchicalLifetimeManager());
             
             config.DependencyResolver = new UnityResolver(container);
+#endregion IoC
         }
     }
 }
