@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using opm_validation_service.Controllers;
-using opm_validation_service.Models;
 using opm_validation_service.Services;
 
 namespace opm_validation_service.Tests.Controllers {

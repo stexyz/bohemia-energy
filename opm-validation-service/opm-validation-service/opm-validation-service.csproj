@@ -138,15 +138,15 @@
     <Compile Include="Services\IdentityManagement.cs" />
     <Compile Include="Services\IEanEicCheckerHttpClient.cs" />
     <Compile Include="Services\IIdentityManagement.cs" />
-    <Compile Include="Services\IOpmRepository.cs" />
+    <Compile Include="Persistence\IOpmRepository.cs" />
     <Compile Include="Services\IOpmVerificator.cs" />
     <Compile Include="Services\IUser.cs" />
-    <Compile Include="Services\IUserLimitRepository.cs" />
-    <Compile Include="Services\OpmRepository.cs" />
+    <Compile Include="Persistence\IUserLimitRepository.cs" />
+    <Compile Include="Persistence\OpmInMemoryRepository.cs" />
     <Compile Include="Services\OpmVerificator.cs" />
     <Compile Include="Services\UnityResolver.cs" />
     <Compile Include="Services\User.cs" />
-    <Compile Include="Services\UserLimitRepository.cs" />
+    <Compile Include="Persistence\UserLimitRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

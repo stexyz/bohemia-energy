@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Microsoft.Practices.Unity;
+using opm_validation_service.Persistence;
 using opm_validation_service.Services;
 
 namespace opm_validation_service {
@@ -35,7 +36,7 @@ namespace opm_validation_service {
             IEanEicCheckerHttpClient eanEicCheckerHttpClient = new EanEicCheckerHttpClient(eanEicCheckerUrl);
             container.RegisterInstance(eanEicCheckerHttpClient);
 
-            container.RegisterType<IOpmRepository, OpmRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IOpmRepository, OpmInMemoryRepository>(new HierarchicalLifetimeManager());
             
             config.DependencyResolver = new UnityResolver(container);
 #endregion IoC

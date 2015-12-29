@@ -1,5 +1,6 @@
 ﻿using System;
 using opm_validation_service.Models;
+using opm_validation_service.Persistence;
 
 namespace opm_validation_service.Services {
 
@@ -38,7 +39,7 @@ namespace opm_validation_service.Services {
         private OpmVerificationResult Verify(EanEicCode code) {
             CheckResult codeValid = EanEicCheckerHttpClient.Post(code);
             if (codeValid.ResultCode != CheckResultCode.EanOk && codeValid.ResultCode != CheckResultCode.EicOk) {
-                //TODO what to do now - maybe better to just return 'false'
+                //TODO SP: what to do now - maybe better to just return 'false'
                 throw new ArgumentException("The supplied code is not valid." + "\n" + codeValid.Description);
             }
 
