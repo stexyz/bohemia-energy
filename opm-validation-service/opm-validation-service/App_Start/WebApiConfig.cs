@@ -27,12 +27,12 @@ namespace opm_validation_service {
             var container = new UnityContainer();
             container.RegisterType<IOpmVerificator, OpmVerificator>(new HierarchicalLifetimeManager());
 
-            //TODO SP: load uri from app.config..
-            IIdentityManagement idm = new IdentityManagement(@"https://am-proxytest.bohemiaenergy.cz/opensso/identity/");
+            string idmUrl = System.Configuration.ConfigurationManager.AppSettings["IdmUrl"];
+            IIdentityManagement idm = new IdentityManagement(idmUrl);
             container.RegisterInstance(idm);
             
-            //TODO SP: load uri from app.config..
-            IEanEicCheckerHttpClient eanEicCheckerHttpClient = new EanEicCheckerHttpClient("http://be-ean-eic-validator.azurewebsites.net/api/EanEicCheck");
+            string eanEicCheckerUrl = System.Configuration.ConfigurationManager.AppSettings["EanEicCheckerUrl"];
+            IEanEicCheckerHttpClient eanEicCheckerHttpClient = new EanEicCheckerHttpClient(eanEicCheckerUrl);
             container.RegisterInstance(eanEicCheckerHttpClient);
 
             container.RegisterType<IOpmRepository, OpmRepository>(new HierarchicalLifetimeManager());
